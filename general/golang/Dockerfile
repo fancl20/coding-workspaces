@@ -1,4 +1,4 @@
-FROM fancl20/code-server-base
+FROM fancl20/workspace-base
 
 RUN apt-get update && apt-get install -y \
         golang && \
