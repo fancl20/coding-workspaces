@@ -1,7 +1,7 @@
 FROM debian:testing
 
 RUN apt-get update && apt-get install -y \
-        dumb-init openssh-server curl git neovim fish rsync && \
+        dumb-init openssh-server curl git neovim fish rsync build-essential && \
     mkdir /var/run/sshd /root/.ssh && \
     echo 'root:root' | chpasswd && \
     sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
