@@ -1,4 +1,4 @@
-FROM fancl20/workspace-general-golang
+FROM fancl20/workspace:general-golang
 
 RUN apt-get update && apt-get install -y \
         ostree && \

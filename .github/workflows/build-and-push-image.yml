@@ -16,20 +16,20 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace-general-base
-          tag_with_ref: true
+          repository: fancl20/workspace
+          tags: general-base
           path: ./general/base
       - uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace-general-golang
-          tag_with_ref: true
+          repository: fancl20/workspace
+          tags: general-golang
           path: ./general/golang
       - uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace-project-bodman
-          tag_with_ref: true
+          repository: fancl20/workspace
+          tags: project-bodman
           path: ./project/bodman
