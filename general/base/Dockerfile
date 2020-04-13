@@ -10,5 +10,5 @@ RUN apt-get update && apt-get install -y \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ENTRYPOINT ["dumb-init"]
-CMD (cp /root/.ssh/authorized_keys_host /root/.ssh/authorized_keys && \
-    chown root /root/.ssh/authorized_keys)> /dev/null; /usr/sbin/sshd -D
+CMD (cp -r /root/.ssh_host /root/.ssh && chown -R root /root/.ssh)> /dev/null; \
+    /usr/sbin/sshd -D
