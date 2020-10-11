@@ -5,7 +5,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: "* * */1 * *"
+    - cron: "0 0 * * *"
 
 jobs:
   build-deploy:
@@ -14,24 +14,26 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: docker/build-push-action@v1
+      - uses: docker/setup-buildx-action@v1
+      - uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace
-          tags: general-base
-          path: ./general/base
-      - uses: docker/build-push-action@v1
+      - uses: docker/build-push-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace
-          tags: general-golang
-          path: ./general/golang
-      - uses: docker/build-push-action@v1
+          context: ./general/base
+          file: ./general/base/Dockerfile
+          push: true
+          tags: fancl20/workspace:general-base
+      - uses: docker/build-push-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fancl20/workspace
-          tags: project-bodman
-          path: ./project/bodman
+          context: ./general/golang
+          file: ./general/golang/Dockerfile
+          push: true
+          tags: fancl20/workspace:general-golang
+      - uses: docker/build-push-action@v2
+        with:
+          context: ./project/bodman
+          file: ./project/bodman/Dockerfile
+          push: true
+          tags: fancl20/workspace:project-bodman
