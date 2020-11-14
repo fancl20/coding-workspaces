@@ -33,7 +33,19 @@ jobs:
           tags: fancl20/workspace:general-golang
       - uses: docker/build-push-action@v2
         with:
+          context: ./general/cpp
+          file: ./general/cpp/Dockerfile
+          push: true
+          tags: fancl20/workspace:general-cpp
+      - uses: docker/build-push-action@v2
+        with:
           context: ./project/bodman
           file: ./project/bodman/Dockerfile
           push: true
           tags: fancl20/workspace:project-bodman
+      - uses: docker/build-push-action@v2
+        with:
+          context: ./project/appbundle
+          file: ./project/appbundle/Dockerfile
+          push: true
+          tags: fancl20/workspace:project-appbundle
