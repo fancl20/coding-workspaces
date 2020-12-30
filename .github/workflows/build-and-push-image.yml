@@ -9,43 +9,24 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: true
       - uses: docker/setup-buildx-action@v1
       - uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ secrets.CR_USER }}
+          password: ${{ secrets.CR_PAT }}
       - uses: docker/build-push-action@v2
         with:
           context: ./general/base
           file: ./general/base/Dockerfile
           push: true
-          tags: fancl20/workspace:general-base
+          tags: ghcr.io/fancl20/workspace:general-base
       - uses: docker/build-push-action@v2
         with:
-          context: ./general/golang
-          file: ./general/golang/Dockerfile
+          context: ./general/common
+          file: ./general/common/Dockerfile
           push: true
-          tags: fancl20/workspace:general-golang
-      - uses: docker/build-push-action@v2
-        with:
-          context: ./general/cpp
-          file: ./general/cpp/Dockerfile
-          push: true
-          tags: fancl20/workspace:general-cpp
-      - uses: docker/build-push-action@v2
-        with:
-          context: ./project/bodman
-          file: ./project/bodman/Dockerfile
-          push: true
-          tags: fancl20/workspace:project-bodman
-      - uses: docker/build-push-action@v2
-        with:
-          context: ./project/appbundle
-          file: ./project/appbundle/Dockerfile
-          push: true
-          tags: fancl20/workspace:project-appbundle
+          tags: ghcr.io/fancl20/workspace:general-common
