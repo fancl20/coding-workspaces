@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     | jq --raw-output 'del(.master) | to_entries | sort_by(.value.date) | .[-1].value."x86_64-linux".tarball' \
     | xargs curl | tar --strip-components=1 -xJC /opt/zig && \
     ln -s /opt/zig/zig /usr/local/bin/ && \
+    git clone --recurse-submodules https://github.com/zigtools/zls /opt/zls && \
+    (cd /opt/zls && zig build) && \
+    ln -s /opt/zls/zig-cache/bin/zls /usr/local/bin/ && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ENV CC=/usr/bin/clang CXX=/usr/bin/clang++
