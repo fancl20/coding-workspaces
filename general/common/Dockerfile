@@ -1,12 +1,15 @@
 FROM fancl20/workspace:general-base
 
-RUN echo 'deb https://dl.bintray.com/dryzig/zig-debian bullseye main' >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 && \
-    apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     clang cmake make pkg-config \
     golang \
-    zig \
-    libostree-dev && \
+    libostree-dev \
+    jq && \
+    mkdir -p /opt/zig && \
+    curl -s https://ziglang.org/download/index.json \
+    | jq --raw-output 'del(.master) | to_entries | sort_by(.value.date) | .[-1].value."x86_64-linux".tarball' \
+    | xargs curl | tar --strip-components=1 -xJC /opt/zig && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ENV CC=/usr/bin/clang CXX=/usr/bin/clang++
+ENV PATH="/opt/zig:${PATH}"
