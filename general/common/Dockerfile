@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     jq && \
     mkdir -p /opt/zig && \
     curl -s https://ziglang.org/download/index.json \
-    | jq --raw-output 'del(.master) | to_entries | sort_by(.value.date) | .[-1].value."x86_64-linux".tarball' \
+    #| jq --raw-output 'del(.master) | to_entries | sort_by(.value.date) | .[-1].value."x86_64-linux".tarball' \
+    | jq --raw-output '.master."x86_64-linux".tarball' \
     | xargs curl | tar --strip-components=1 -xJC /opt/zig && \
     ln -s /opt/zig/zig /usr/local/bin/ && \
     git clone --recurse-submodules https://github.com/zigtools/zls /opt/zls && \
