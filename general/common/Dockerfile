@@ -1,8 +1,10 @@
 FROM fancl20/workspace:general-base
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && \
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y \
     clang cmake make pkg-config \
-    golang \
+    golang nodejs \
     libostree-dev \
     jq && \
     mkdir -p /opt/zig && \
