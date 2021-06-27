@@ -1,8 +1,7 @@
 FROM fancl20/workspace:general-base
 
-RUN apt-get update && apt-get upgrade -y && \
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y \
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get update && apt-get install -y \
     clang cmake make pkg-config \
     golang nodejs \
     libostree-dev \
