@@ -18,13 +18,13 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.CR_USER }}
           password: ${{ secrets.CR_PAT }}
-      - uses: docker/build-push-action@v2.5.0
+      - uses: docker/build-push-action@v2.6.1
         with:
           context: ./general/base
           file: ./general/base/Dockerfile
           push: true
           tags: ghcr.io/fancl20/workspace:general-base
-      - uses: docker/build-push-action@v2.5.0
+      - uses: docker/build-push-action@v2.6.1
         with:
           context: ./general/common
           file: ./general/common/Dockerfile
